@@ -9,7 +9,26 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import toast from "react-hot-toast";
 
+const countryCodes = [
+  { code: "+91", country: "India", flag: "🇮🇳" },
+  { code: "+1", country: "USA/Canada", flag: "🇺🇸" },
+  { code: "+44", country: "UK", flag: "🇬🇧" },
+  { code: "+971", country: "UAE", flag: "🇦🇪" },
+  { code: "+65", country: "Singapore", flag: "🇸🇬" },
+  { code: "+60", country: "Malaysia", flag: "🇲🇾" },
+  { code: "+61", country: "Australia", flag: "🇦🇺" },
+  { code: "+64", country: "New Zealand", flag: "🇳🇿" },
+  { code: "+86", country: "China", flag: "🇨🇳" },
+  { code: "+81", country: "Japan", flag: "🇯🇵" },
+  { code: "+82", country: "South Korea", flag: "🇰🇷" },
+  { code: "+49", country: "Germany", flag: "🇩🇪" },
+  { code: "+33", country: "France", flag: "🇫🇷" },
+  { code: "+39", country: "Italy", flag: "🇮🇹" },
+  { code: "+34", country: "Spain", flag: "🇪🇸" },
+];
+
 export default function LoginPage() {
+  const [countryCode, setCountryCode] = useState("+91");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [otp, setOtp] = useState("");
   const [step, setStep] = useState<"phone" | "otp">("phone");
@@ -35,7 +54,9 @@ export default function LoginPage() {
         return;
       }
 
-      const formattedPhone = phoneNumber.startsWith("+") ? phoneNumber : `+91${phoneNumber}`;
+      // Remove any existing country code from phone number
+      const cleanPhone = phoneNumber.replace(/^\+?\d{1,4}\s?/, "");
+      const formattedPhone = `${countryCode}${cleanPhone}`;
       const result = await sendOTP(formattedPhone, recaptchaVerifier);
       setConfirmationResult(result);
       setStep("otp");
@@ -95,15 +116,28 @@ export default function LoginPage() {
               <label htmlFor="phone" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Phone Number
               </label>
-              <input
-                id="phone"
-                type="tel"
-                required
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                placeholder="+91 9876543210"
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-dark-700 rounded-md shadow-sm bg-white dark:bg-dark-900 text-gray-900 dark:text-white focus:outline-none focus:ring-primary-500 focus:border-primary-500"
-              />
+              <div className="mt-1 flex rounded-md shadow-sm">
+                <select
+                  value={countryCode}
+                  onChange={(e) => setCountryCode(e.target.value)}
+                  className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 dark:border-dark-700 bg-gray-50 dark:bg-dark-800 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+                >
+                  {countryCodes.map((country) => (
+                    <option key={country.code} value={country.code}>
+                      {country.flag} {country.code}
+                    </option>
+                  ))}
+                </select>
+                <input
+                  id="phone"
+                  type="tel"
+                  required
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, ""))}
+                  placeholder="9876543210"
+                  className="flex-1 block w-full px-3 py-2 border border-gray-300 dark:border-dark-700 rounded-r-md shadow-sm bg-white dark:bg-dark-900 text-gray-900 dark:text-white focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+                />
+              </div>
             </div>
             <div id="recaptcha-container"></div>
             <button

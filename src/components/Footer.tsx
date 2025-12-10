@@ -24,13 +24,31 @@ export const Footer = () => {
               Spicy, hot, and delicious - delivered fresh to your doorstep worldwide.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="text-gray-400 hover:text-primary-500 transition-colors text-2xl">
+              <a 
+                href="https://www.facebook.com/aavakaaram" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-primary-500 transition-colors text-2xl"
+                aria-label="Facebook"
+              >
                 📘
               </a>
-              <a href="#" className="text-gray-400 hover:text-primary-500 transition-colors text-2xl">
+              <a 
+                href="https://www.instagram.com/aavakaaram" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-primary-500 transition-colors text-2xl"
+                aria-label="Instagram"
+              >
                 📷
               </a>
-              <a href="#" className="text-gray-400 hover:text-primary-500 transition-colors text-2xl">
+              <a 
+                href="https://twitter.com/aavakaaram" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-primary-500 transition-colors text-2xl"
+                aria-label="Twitter"
+              >
                 🐦
               </a>
             </div>

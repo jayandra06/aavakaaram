@@ -22,13 +22,14 @@ export default function Home() {
 
       {/* Hero Section - Modern Design */}
       <section className="relative bg-gradient-to-br from-primary-600 via-primary-700 to-dark-900 text-white overflow-hidden">
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 overflow-hidden">
           <Image
             src="/hero.png"
             alt="Spicy Pickles"
             fill
-            className="object-cover opacity-20"
+            className="object-cover object-center opacity-20"
             priority
+            sizes="100vw"
           />
         </div>
         <div className="absolute inset-0 bg-gradient-to-br from-primary-600/90 via-primary-700/80 to-dark-900/90"></div>
@@ -80,13 +81,14 @@ export default function Home() {
               </div>
             </div>
             <div className="relative hidden lg:block">
-              <div className="relative h-[600px] rounded-3xl overflow-hidden shadow-2xl">
+              <div className="relative h-[700px] lg:h-[800px] w-full rounded-3xl overflow-hidden shadow-2xl">
                 <Image
                   src="/hero.png"
                   alt="Premium Pickles"
                   fill
-                  className="object-cover"
+                  className="object-cover object-top"
                   priority
+                  sizes="(max-width: 1024px) 0vw, 50vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
               </div>
