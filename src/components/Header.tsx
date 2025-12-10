@@ -2,12 +2,14 @@
 
 import Link from "next/link";
 import { useAuth } from "@/hooks/useAuth";
+import { useCart } from "@/store/cart";
 import { ThemeToggle } from "./ThemeToggle";
 import { SearchBar } from "./SearchBar";
 import { ShoppingCartIcon, UserIcon } from "@heroicons/react/24/outline";
 
 export const Header = () => {
   const { user } = useAuth();
+  const itemCount = useCart((state) => state.getItemCount());
 
   return (
     <header className="bg-white dark:bg-dark-900 border-b border-gray-200 dark:border-dark-800 sticky top-0 z-50 shadow-sm">
@@ -66,9 +68,11 @@ export const Header = () => {
                   className="relative p-2 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
                 >
                   <ShoppingCartIcon className="w-6 h-6" />
-                  <span className="absolute -top-1 -right-1 bg-primary-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                    0
-                  </span>
+                  {itemCount > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-primary-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
+                      {itemCount > 99 ? "99+" : itemCount}
+                    </span>
+                  )}
                 </Link>
                 <Link
                   href="/dashboard"

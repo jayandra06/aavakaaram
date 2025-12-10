@@ -2,8 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { StarIcon, ShoppingCartIcon } from "@heroicons/react/24/solid";
 import { StarIcon as StarOutline } from "@heroicons/react/24/outline";
+import { useCart } from "@/store/cart";
+import { useAuth } from "@/hooks/useAuth";
+import toast from "react-hot-toast";
 
 interface ProductCardProps {
   id: string;
@@ -16,6 +20,37 @@ interface ProductCardProps {
 }
 
 export const ProductCard = ({ id, name, price, image, rating = 4.5, inStock = true, discount }: ProductCardProps) => {
+  const router = useRouter();
+  const { user } = useAuth();
+  const { addItem } = useCart();
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (!user) {
+      toast.error("Please login to add items to cart");
+      router.push("/login");
+      return;
+    }
+
+    if (!inStock) {
+      toast.error("Product is out of stock");
+      return;
+    }
+
+    const finalPrice = discount ? Math.round(price * (1 - discount / 100)) : price;
+    
+    addItem({
+      productId: id,
+      productName: name,
+      price: finalPrice,
+      image: image,
+    }, 1);
+
+    toast.success(`${name} added to cart!`);
+  };
+
   const renderStars = (rating: number) => {
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 >= 0.5;
@@ -89,11 +124,8 @@ export const ProductCard = ({ id, name, price, image, rating = 4.5, inStock = tr
               )}
             </div>
             <button
-              onClick={(e) => {
-                e.preventDefault();
-                // Add to cart logic
-              }}
-              className="p-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors shadow-md hover:shadow-lg"
+              onClick={handleAddToCart}
+              className="p-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={!inStock}
             >
               <ShoppingCartIcon className="w-5 h-5" />

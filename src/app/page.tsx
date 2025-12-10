@@ -24,7 +24,7 @@ export default function Home() {
       <section className="relative bg-gradient-to-br from-primary-600 via-primary-700 to-dark-900 text-white overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1606914469633-bd39206ea739?w=1920&h=1080&fit=crop"
+            src="/hero.png"
             alt="Spicy Pickles"
             fill
             className="object-cover opacity-20"
@@ -82,7 +82,7 @@ export default function Home() {
             <div className="relative hidden lg:block">
               <div className="relative h-[600px] rounded-3xl overflow-hidden shadow-2xl">
                 <Image
-                  src="https://images.unsplash.com/photo-1606914509765-5c4a5c8e8b8c?w=800&h=1200&fit=crop"
+                  src="/hero.png"
                   alt="Premium Pickles"
                   fill
                   className="object-cover"
