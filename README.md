@@ -1,6 +1,6 @@
 # AavaKaaram - Pickles E-Commerce Platform
 
-A modern e-commerce platform for AavaKaaram pickles business, built with Next.js, Firebase, and DHL API integration..
+A modern e-commerce platform for AavaKaaram pickles business, built with Next.js, Firebase, and DHL API integration.
 
 ## Features
 
