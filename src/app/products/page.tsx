@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -10,7 +10,7 @@ import { useProducts } from "@/hooks/useProducts";
 import { getDocuments } from "@/lib/firebase/firestore";
 import { FunnelIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
-export default function ProductsPage() {
+function ProductsContent() {
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get("category");
   const searchParam = searchParams.get("search");
@@ -289,3 +289,19 @@ export default function ProductsPage() {
   );
 }
 
+export default function ProductsPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-white dark:bg-dark-900 flex flex-col">
+          <Header />
+          <div className="flex-1 flex items-center justify-center">
+            <div className="text-gray-600 dark:text-gray-400">Loading...</div>
+          </div>
+        </div>
+      }
+    >
+      <ProductsContent />
+    </Suspense>
+  );
+}

@@ -7,6 +7,7 @@ import { createDocument, getDocument, updateDocument } from "@/lib/firebase/fire
 import { useAuth } from "@/hooks/useAuth";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Header } from "@/components/Header";
+import { User } from "@/types";
 import toast from "react-hot-toast";
 
 export default function AdminLoginPage() {
@@ -55,7 +56,7 @@ export default function AdminLoginPage() {
       const user = await verifyOTP(confirmationResult, otp);
       
       // Check if user exists in Firestore
-      const userDoc = await getDocument("users", user.uid);
+      const userDoc = await getDocument("users", user.uid) as User | null;
       
       if (!userDoc) {
         // Create new admin user
