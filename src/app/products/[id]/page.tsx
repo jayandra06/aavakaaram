@@ -59,11 +59,12 @@ function ProductDetailContent() {
           return;
         }
 
-        setProduct(productData as Product);
+        const typedProduct = productData as Product;
+        setProduct(typedProduct);
 
         // Fetch category
-        if (productData.categoryId) {
-          const categoryData = await getDocument("categories", productData.categoryId);
+        if (typedProduct.categoryId) {
+          const categoryData = await getDocument("categories", typedProduct.categoryId);
           setCategory(categoryData);
         }
 
